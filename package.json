@@ -1,0 +1,36 @@
+{
+    "name": "lightbox",
+    "version": "0.0.1",
+    "description": "An image display script designed with progressive enhancement in mind",
+    "main": "src/lightbox.js",
+    "scripts": {
+        "scss": "node-sass _src/scss/_default.scss > app/lightbox.css --output-style expanded --indent-type space --indent-width 4",
+        "rollup": "rollup -c"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ozpital/lightbox.git"
+    },
+    "keywords": [
+        "lightbox",
+        "gallery",
+        "css",
+        "javascript",
+        "es6",
+        "progressive enhancement"
+    ],
+    "author": "Laurence Archer",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ozpital/lightbox/issues"
+    },
+    "homepage": "https://github.com/ozpital/lightbox#readme",
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-es2015-rollup": "^3.0.0",
+        "node-sass": "^4.7.2",
+        "rollup": "^0.55.0",
+        "rollup-plugin-babel": "^3.0.3",
+        "rollup-plugin-node-resolve": "^3.0.2"
+    }
+}
