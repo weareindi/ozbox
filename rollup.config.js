@@ -1,5 +1,6 @@
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
+import minify from 'rollup-plugin-babel-minify';
 
 export default {
     input: '_src/js/script.js',
@@ -13,6 +14,7 @@ export default {
             presets: [
                 'es2015-rollup'
             ]
-        })
+        }),
+        minify()
     ]
 };

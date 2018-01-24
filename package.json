@@ -4,8 +4,14 @@
     "description": "An image display script designed with progressive enhancement in mind",
     "main": "src/lightbox.js",
     "scripts": {
-        "scss": "node-sass _src/scss/_default.scss > app/lightbox.css --output-style expanded --indent-type space --indent-width 4",
-        "rollup": "rollup -c"
+        "scss": "node-sass _src/scss/styles.scss > app/styles.css --output-style expanded --indent-type space --indent-width 4" ,
+        "postcss": "postcss app/styles.css --output app/styles.css --use autoprefixer --no-map",
+        "rollup": "rollup -c",
+        "compile-css": "npm run scss && npm run postcss",
+        "compile-js": "npm run rollup",
+        "watch-css": "watch --pattern \"_src/scss/**/*.scss\" -c \"npm run compile-css\"",
+        "watch-js": "watch --pattern \"_src/js/**/*.js\" -c \"npm run compile-js\"",
+        "watch": "concurrently \"npm run watch-css\" \"npm run watch-js\""
     },
     "repository": {
         "type": "git",
@@ -26,11 +32,18 @@
     },
     "homepage": "https://github.com/ozpital/lightbox#readme",
     "devDependencies": {
+        "autoprefixer": "^7.2.5",
         "babel-cli": "^6.26.0",
         "babel-preset-es2015-rollup": "^3.0.0",
+        "concurrently": "^3.5.1",
+        "cssnano": "^3.10.0",
         "node-sass": "^4.7.2",
+        "postcss-cli": "^4.1.1",
         "rollup": "^0.55.0",
         "rollup-plugin-babel": "^3.0.3",
-        "rollup-plugin-node-resolve": "^3.0.2"
-    }
+        "rollup-plugin-babel-minify": "^3.1.2",
+        "rollup-plugin-node-resolve": "^3.0.2",
+        "rollup-watch": "^4.3.1"
+    },
+    "dependencies": {}
 }
