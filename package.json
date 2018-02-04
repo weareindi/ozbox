@@ -1,21 +1,24 @@
 {
-    "name": "lightbox",
+    "name": "ozbox",
     "version": "0.0.1",
     "description": "An image display script designed with progressive enhancement in mind",
-    "main": "src/lightbox.js",
+    "main": "_src/js/module.js",
     "scripts": {
-        "scss": "node-sass _src/scss/styles.scss > app/styles.css --output-style expanded --indent-type space --indent-width 4" ,
-        "postcss": "postcss app/styles.css --output app/styles.css --use autoprefixer --no-map",
-        "rollup": "rollup -c",
-        "compile-css": "npm run scss && npm run postcss",
-        "compile-js": "npm run rollup",
+        "scss": "node-sass _src/scss/styles.scss > dist/styles.css --output-style expanded --indent-type space --indent-width 4",
+        "css-autoprefix": "postcss dist/styles.css --output dist/styles.css --use autoprefixer --no-map",
+        "css-minify": "postcss dist/styles.css --output dist/styles.min.css --use cssnano --no-map",
+        "js": "browserify _src/js/script.js -o dist/script.js -t [ babelify ]",
+        "js-minify": "uglifyjs dist/script.js > dist/script.min.js",
+        "compile-css": "npm run scss && npm run css-autoprefix",
+        "compile-js": "npm run js",
         "watch-css": "watch --pattern \"_src/scss/**/*.scss\" -c \"npm run compile-css\"",
         "watch-js": "watch --pattern \"_src/js/**/*.js\" -c \"npm run compile-js\"",
-        "watch": "concurrently \"npm run watch-css\" \"npm run watch-js\""
+        "watch": "concurrently \"npm run watch-css\" \"npm run watch-js\"",
+        "production": "npm run compile-css && npm run css-minify && npm run js && npm run js-minify"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ozpital/lightbox.git"
+        "url": "git+https://github.com/ozpital/ozbox.git"
     },
     "keywords": [
         "lightbox",
@@ -28,22 +31,28 @@
     "author": "Laurence Archer",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/ozpital/lightbox/issues"
+        "url": "https://github.com/ozpital/ozbox/issues"
     },
-    "homepage": "https://github.com/ozpital/lightbox#readme",
+    "homepage": "https://github.com/ozpital/ozbox#readme",
     "devDependencies": {
         "autoprefixer": "^7.2.5",
-        "babel-cli": "^6.26.0",
-        "babel-preset-es2015-rollup": "^3.0.0",
+        "babel-core": "^6.26.0",
+        "babel-plugin-transform-html-import-to-string": "0.0.1",
+        "babel-polyfill": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
+        "babelify": "^8.0.0",
+        "browserify": "^15.2.0",
         "concurrently": "^3.5.1",
         "cssnano": "^3.10.0",
         "node-sass": "^4.7.2",
         "postcss-cli": "^4.1.1",
-        "rollup": "^0.55.0",
-        "rollup-plugin-babel": "^3.0.3",
-        "rollup-plugin-babel-minify": "^3.1.2",
-        "rollup-plugin-node-resolve": "^3.0.2",
-        "rollup-watch": "^4.3.1"
+        "stylelint": "^8.4.0",
+        "stylelint-config-standard": "^18.0.0",
+        "stylelint-order": "^0.8.0",
+        "uglify-js": "^3.3.9",
+        "watch-cli": "^0.2.3"
     },
-    "dependencies": {}
+    "dependencies": {
+        "mutationobserver-polyfill": "^1.3.0"
+    }
 }

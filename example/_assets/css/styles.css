@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 2em;
+    font-family: sans-serif;
+    line-height: 1.4em;
+    color: #111;
+    background-color: #FFF;
+}
+
+.hidden-but-relevant {
+    position: absolute;
+    top: 0;
+    left: -200%;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.site-header {
+    padding: 1em;
+}
+
+.site-header__heading {
+    font-size: 1em;
+    line-height: 1em;
+}
+
+.site-header__link {
+    display: block;
+    width: 7em;
+    height: 1.4em;
+    background-image: url('../images/ozpital_logo.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.page-header {
+    margin: 4em 0 0;
+    padding: 1em;
+}
+
+.page-header__heading {}
+
+.page-header__heading-text {
+    font-size: 1.4em;
+    font-weight: 300;
+    line-height: 1.4em;
+    text-transform: uppercase;
+}
+
+.page-header__subheading {}
+
+.page-header__subheading-text {}
+
+.section {
+    margin: 4em 0 0;
+    padding: 2em;
+
+    background-color: #F5F5F5;
+}
+
+.section-header {}
+
+.section-header__heading {}
+
+.section-header__heading-text {
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.4em;
+    text-transform: uppercase;
+}
+
+.article {
+    margin: 2em 0 0;
+}
+
+.article__header {}
+
+.article__heading {}
+
+.article__heading-text {
+    font-weight: 300;
+}
+
+.image-list {
+    margin: 0.5em 0 0;
+    padding: 0 0 0 1em;
+}
+
+.image-list__item {}
+
+.image-list__thumbnail {}
+
+.image-list__name {}
+
+.columns {}
+
+.columns__column {
+    width: 100%;
+}
+
+@supports (display: flex) {
+    @media (min-width: 800px) {
+        .columns {
+            display: flex;
+        }
+
+        .columns__column {}
+    }
+}
