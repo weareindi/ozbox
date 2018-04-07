@@ -24,7 +24,7 @@ var Template = '<div class="ozbox" data-active="false">\r\n    <div class="ozbox
 var OzBox = exports.OzBox = function () {
     /**
      * Constructor
-     * @param {[object]} options User defined overrides
+     * @param {object} options User defined overrides
      */
     function OzBox(options) {
         _classCallCheck(this, OzBox);
@@ -210,14 +210,17 @@ var OzBox = exports.OzBox = function () {
 
         /**
          * Populate group images array with provided sources
-         * @param HTMLelement element
+         * @param {element} element
          */
 
     }, {
         key: 'populateGroupImages',
         value: function populateGroupImages(element) {
             // Get group Name
-            var groupName = element.getAttribute(this.settings.groupNameAttribute) ? element.getAttribute(this.settings.groupNameAttribute) : false;
+            var groupName = false;
+            if (element.getAttribute(this.settings.groupNameAttribute)) {
+                groupName = element.getAttribute(this.settings.groupNameAttribute);
+            }
 
             // Get selected element
             var groupElement = element;
@@ -225,20 +228,25 @@ var OzBox = exports.OzBox = function () {
             // Get group elements
             var groupElements = [groupElement];
             if (groupName) {
-                groupElements = [].slice.call(document.querySelectorAll('[' + this.settings.groupNameAttribute + '="' + groupName + '"]'));
+                var groupNodes = document.querySelectorAll('[' + this.settings.groupNameAttribute + '="' + groupName + '"]');
+                groupElements = [].slice.call(groupNodes);
             }
 
             // Get group image srcs
             this.groupImages = [];
             for (var i = 0; i < groupElements.length; i++) {
-                this.groupImages.push(groupElements[i].getAttribute(this.settings.customImgSrcAttribute) ? groupElements[i].getAttribute(this.settings.customImgSrcAttribute) : groupElements[i].getAttribute('href'));
+                var src = groupElements[i].getAttribute('href');
+                if (groupElements[i].getAttribute(this.settings.customImgSrcAttribute)) {
+                    src = groupElements[i].getAttribute(this.settings.customImgSrcAttribute);
+                }
+                this.groupImages.push(src);
             }
 
             // Find current element index in group
             this.groupCurrentIndex = 0;
-            for (var i = 0; i < groupElements.length; i++) {
-                if (groupElements[i] === groupElement) {
-                    this.groupCurrentIndex = i;
+            for (var _i = 0; _i < groupElements.length; _i++) {
+                if (groupElements[_i] === groupElement) {
+                    this.groupCurrentIndex = _i;
                     break;
                 }
             }
@@ -249,18 +257,26 @@ var OzBox = exports.OzBox = function () {
 
         /**
          * Change to adjacent image in group
-         * @param  String direction
+         * @param {string} direction
          */
 
     }, {
         key: 'changeImg',
         value: function changeImg(direction) {
             if (direction === 'previous') {
-                this.groupCurrentIndex = this.groupCurrentIndex === 0 ? this.groupImages.length - 1 : this.groupCurrentIndex - 1;
+                var newIndex = this.groupCurrentIndex - 1;
+                if (this.groupCurrentIndex === 0) {
+                    newIndex = this.groupImages.length - 1;
+                }
+                this.groupCurrentIndex = newIndex;
             }
 
             if (direction === 'next') {
-                this.groupCurrentIndex = this.groupCurrentIndex === this.groupImages.length - 1 ? 0 : this.groupCurrentIndex + 1;
+                var _newIndex = this.groupCurrentIndex + 1;
+                if (this.groupCurrentIndex === this.groupImages.length - 1) {
+                    _newIndex = 0;
+                }
+                this.groupCurrentIndex = _newIndex;
             }
 
             this.hideClose();
@@ -272,8 +288,8 @@ var OzBox = exports.OzBox = function () {
 
         /**
          * Set Img Element Max Dimensions it can grow to
-         * @param Integer width In Pixels
-         * @param Integer height In Pixels
+         * @param {integer} width In Pixels
+         * @param {integer} height In Pixels
          */
 
     }, {

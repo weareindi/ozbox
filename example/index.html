@@ -4,8 +4,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>Ozbox</title>
-        <link rel="stylesheet" type="text/css" href="./_assets/css/styles.css">
-        <link rel="stylesheet" type="text/css" href="../dist/css/styles.css">
+
+        <noscript>
+            <link rel="stylesheet" type="text/css" href="./_assets/css/styles.css">
+            <link rel="stylesheet" type="text/css" href="../dist/css/styles.min.css">
+        </noscript>
 
         <!--[if lt IE 9]>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -79,6 +82,23 @@
     		</section>
     	</main>
 
-        <script type="text/javascript" src="../dist/js/script.js"></script>
+        <script>
+            var elementHtml = document.getElementsByTagName('html')[0];
+
+            var stylesheets = [
+                './_assets/css/styles.css',
+                '../dist/css/styles.min.css'
+            ];
+
+            for (var i = 0; i < stylesheets.length; i++) {
+                var linkElement = document.createElement('link');
+                linkElement.rel = 'stylesheet';
+                linkElement.type = 'text/css';
+                linkElement.href = stylesheets[i];
+                elementHtml.appendChild(linkElement);
+            }
+        </script>
+
+        <script type="text/javascript" src="../dist/js/script.min.js"></script>
     </body>
 </html>
