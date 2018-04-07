@@ -3,12 +3,12 @@
         [
             "env", {
                 "targets": {
-                    "browsers": ["last 10 versions", "ie >= 8"]
+                    "browsers": ["last 10 versions", "ie >= 9"]
                 }
             }
         ]
     ],
     "plugins": [
-        "transform-html-import-to-string"
+        ["transform-html-import-to-string"]
     ]
 }

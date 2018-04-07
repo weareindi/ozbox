@@ -1,0 +1,228 @@
+.ozbox-button {
+    display: block;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+}
+
+.ozbox-button__icon {
+    display: block;
+    width: 3em;
+    height: 3em;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.ozbox-button__text {
+    display: none;
+}
+
+.ozbox-button--close {
+    background-color: #000;
+    opacity: 0;
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
+    -webkit-transition-duration: 0ms;
+            transition-duration: 0ms;
+    will-change: opacity;
+}
+
+.ozbox-button--close[data-active="true"] {
+    opacity: 0.5;
+    -webkit-transition-duration: 250ms;
+            transition-duration: 250ms;
+}
+
+.ozbox-button--close:hover {
+    opacity: 1;
+    -webkit-transition-duration: 250ms;
+            transition-duration: 250ms;
+}
+
+.ozbox-button--close .ozbox-button__icon {
+    background-image: url("../images/button--close.svg");
+}
+
+.ozbox-button--previous,
+.ozbox-button--next {
+    background-color: #FFF;
+    opacity: 0.75;
+    will-change: opacity;
+}
+
+.ozbox-button--previous[data-active="true"],
+.ozbox-button--next[data-active="true"] {
+    opacity: 1;
+}
+
+.ozbox-button--previous .ozbox-button__icon {
+    background-image: url("../images/button--previous.svg");
+}
+
+.ozbox-button--next .ozbox-button__icon {
+    background-image: url("../images/button--next.svg");
+}
+
+@media (min-height: 640px) {
+    .ozbox-button--close .ozbox-button__icon {
+        width: 3em;
+        height: 3em;
+    }
+    .ozbox-button__icon {
+        width: 4em;
+        height: 4em;
+    }
+}
+
+.ozbox {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.ozbox[data-active="true"] {
+    display: block;
+}
+
+.ozbox[data-group-size="1"] .ozbox__container {
+    padding: 1em;
+}
+
+.ozbox[data-group-size="1"] .ozbox__nav {
+    display: none;
+}
+
+.ozbox,
+.ozbox *,
+.ozbox:before,
+.ozbox:after {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.ozbox__background {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
+.ozbox__container {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1em 1em 4em;
+}
+
+.ozbox__window {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.ozbox__frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: auto;
+    min-width: 3em;
+    min-height: 3em;
+    overflow: hidden;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+}
+
+.ozbox__image {
+    opacity: 0;
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
+    -webkit-transition-duration: 0ms;
+            transition-duration: 0ms;
+    will-change: opacity;
+}
+
+.ozbox__image[data-active="true"] {
+    opacity: 1;
+    -webkit-transition-duration: 2000ms;
+            transition-duration: 2000ms;
+}
+
+.ozbox__img {
+    display: block;
+    max-width: 3em;
+    max-height: 3em;
+}
+
+.ozbox__loader {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: 2rem;
+    height: 2rem;
+    overflow: hidden;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    background-image: url("../images/ajax_loader.svg");
+    background-size: 100% 100%;
+    opacity: 0;
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
+    -webkit-transition-duration: 2000ms;
+            transition-duration: 2000ms;
+}
+
+.ozbox__loader[data-active="true"] {
+    opacity: 1;
+}
+
+.ozbox__nav {
+    position: absolute;
+    z-index: 3;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3em;
+    text-align: center;
+    background-color: #fff;
+}
+
+.ozbox__buttons {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.ozbox__button {
+    float: left;
+    clear: none;
+}
+
+.ozbox__button--close {
+    position: absolute;
+    z-index: 1;
+    top: 1em;
+    right: 1em;
+}
+
+@media (min-height: 640px) {
+    .ozbox__container {
+        padding: 1em 1em 5em;
+    }
+    .ozbox__nav {
+        height: 4em;
+    }
+}

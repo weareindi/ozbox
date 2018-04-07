@@ -12,6 +12,7 @@
         "indentation": 4,
         "selector-pseudo-element-colon-notation": "single",
         "declaration-empty-line-before": null,
+        "no-descending-specificity": null,
         "order/properties-order": [
             "content",
             "position",

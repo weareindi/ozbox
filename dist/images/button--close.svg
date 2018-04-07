@@ -1,0 +1,19 @@
+<svg
+	 viewBox="0 0 18 18"
+	 style="background-color:#ffffff00"
+	 version="1.1"
+	 xmlns="http://www.w3.org/2000/svg"
+	 xmlns:xlink="http://www.w3.org/1999/xlink"
+	 xml:space="preserve"
+	 x="0px"
+	 y="0px"
+	 width="18px"
+	 height="18px"
+	 preserveAspectRatio="none"
+>
+	
+	<g>
+		<path d="M 0.5 1.5729 L 7.4425 8.4162 L 7.3572 8.4994 L 7.4425 8.5833 L 0.5 15.4274 L 1.5264 16.5 L 8.5007 9.6256 L 15.4736 16.5 L 16.5 15.4274 L 9.5568 8.5833 L 9.6428 8.4994 L 9.5568 8.4162 L 16.5 1.5729 L 15.4736 0.5 L 8.5007 7.3739 L 1.5264 0.5 L 0.5 1.5729 Z" fill="#ffffff"/>
+	</g>
+	
+</svg>

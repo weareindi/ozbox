@@ -1,31 +1,36 @@
-<div class="ozbox">
+<div class="ozbox" data-active="false">
     <div class="ozbox__background"></div>
 
     <div class="ozbox__nav">
-        <div class="ozbox__button ozbox__button--close">
-            <button class="ozbox-button">
-                <span class="ozbox-button__icon"></span>
-                <span class="ozbox-button__text">Close</span>
-            </button>
-        </div>
-        <div class="ozbox__button ozbox__button--previous">
-            <button class="ozbox-button">
-                <span class="ozbox-button__icon"></span>
-                <span class="ozbox-button__text">Previous</span>
-            </button>
-        </div>
-        <div class="ozbox__button ozbox__button--next">
-            <button class="ozbox-button">
-                <span class="ozbox-button__icon"></span>
-                <span class="ozbox-button__text">Next</span>
-            </button>
+        <div class="ozbox__buttons">
+            <div class="ozbox__button ozbox__button--previous">
+                <button class="ozbox-button ozbox-button--previous">
+                    <span class="ozbox-button__icon"></span>
+                    <span class="ozbox-button__text">Previous</span>
+                </button>
+            </div>
+            <div class="ozbox__button ozbox__button--next">
+                <button class="ozbox-button ozbox-button--next">
+                    <span class="ozbox-button__icon"></span>
+                    <span class="ozbox-button__text">Next</span>
+                </button>
+            </div>
         </div>
     </div>
 
     <div class="ozbox__container">
         <div class="ozbox__window">
             <div class="ozbox__frame">
-                <div class="ozbox__image"></div>
+                <div class="ozbox__loader"></div>
+                <div class="ozbox__button ozbox__button--close">
+                    <button class="ozbox-button ozbox-button--close">
+                        <span class="ozbox-button__icon"></span>
+                        <span class="ozbox-button__text">Close</span>
+                    </button>
+                </div>
+                <div class="ozbox__image">
+                    <img class="ozbox__img">
+                </div>
             </div>
         </div>
     </div>
