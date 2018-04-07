@@ -83,7 +83,7 @@
     	</main>
 
         <script>
-            var elementHtml = document.getElementsByTagName('html')[0];
+            var elementHead = document.getElementsByTagName('head')[0];
 
             var stylesheets = [
                 './_assets/css/styles.css',
@@ -95,7 +95,7 @@
                 linkElement.rel = 'stylesheet';
                 linkElement.type = 'text/css';
                 linkElement.href = stylesheets[i];
-                elementHtml.appendChild(linkElement);
+                elementHead.appendChild(linkElement);
             }
         </script>
 
