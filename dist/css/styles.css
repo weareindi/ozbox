@@ -21,8 +21,10 @@
     background-color: #000;
     opacity: 0;
     -webkit-transition-duration: 0ms;
+         -o-transition-duration: 0ms;
             transition-duration: 0ms;
     -webkit-transition-property: opacity;
+    -o-transition-property: opacity;
     transition-property: opacity;
     will-change: opacity;
 }
@@ -30,12 +32,14 @@
 .ozbox-button--close[data-active="true"] {
     opacity: 0.5;
     -webkit-transition-duration: 250ms;
+         -o-transition-duration: 250ms;
             transition-duration: 250ms;
 }
 
 .ozbox-button--close:hover {
     opacity: 1;
     -webkit-transition-duration: 250ms;
+         -o-transition-duration: 250ms;
             transition-duration: 250ms;
 }
 
@@ -143,14 +147,17 @@
     height: auto;
     min-height: 3em;
     -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
 }
 
 .ozbox__image {
     opacity: 0;
     -webkit-transition-duration: 0ms;
+         -o-transition-duration: 0ms;
             transition-duration: 0ms;
     -webkit-transition-property: opacity;
+    -o-transition-property: opacity;
     transition-property: opacity;
     will-change: opacity;
 }
@@ -158,6 +165,7 @@
 .ozbox__image[data-active="true"] {
     opacity: 1;
     -webkit-transition-duration: 2000ms;
+         -o-transition-duration: 2000ms;
             transition-duration: 2000ms;
 }
 
@@ -176,13 +184,17 @@
     width: 2rem;
     height: 2rem;
     background-image: url("../images/ajax_loader.svg");
-    background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+            background-size: 100% 100%;
     opacity: 0;
     -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
     -webkit-transition-duration: 2000ms;
+         -o-transition-duration: 2000ms;
             transition-duration: 2000ms;
     -webkit-transition-property: opacity;
+    -o-transition-property: opacity;
     transition-property: opacity;
 }
 

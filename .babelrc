@@ -1,14 +1,12 @@
 {
     "presets": [
-        [
-            "env", {
-                "targets": {
-                    "browsers": ["last 10 versions", "ie >= 9"]
-                }
-            }
-        ]
+        ["@babel/preset-env", {
+            "debug": false,
+            "useBuiltIns": "usage"
+        }]
     ],
     "plugins": [
+        ["@babel/plugin-transform-regenerator"],
         ["transform-html-import-to-string"]
     ]
 }
