@@ -1,0 +1,161 @@
+.lightbox {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+
+    &[data-active="true"] {
+        display: block;
+    }
+
+    &[data-group-size="1"] {
+        .lightbox__container {
+            padding: 1em;
+        }
+
+        .lightbox__nav {
+            display: none;
+        }
+    }
+}
+
+.lightbox,
+.lightbox *,
+.lightbox:before,
+.lightbox:after {
+    margin: 0;
+    padding: 0;
+
+    font-size: 16px;
+
+    box-sizing: border-box;
+}
+
+.lightbox__background {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.95);
+}
+
+.lightbox__container {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    padding: 1em 1em (3em + 1em);
+}
+
+.lightbox__window {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.lightbox__frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    width: auto;
+    min-width: 3em;
+    height: auto;
+    min-height: 3em;
+    transform: translate(-50%, -50%);
+}
+
+.lightbox__image {
+    opacity: 0;
+
+    transition-duration: 0ms;
+    transition-property: opacity;
+    will-change: opacity;
+
+    &[data-active="true"] {
+        opacity: 1;
+
+        transition-duration: 2000ms;
+    }
+}
+
+.lightbox__img {
+    display: block;
+    max-width: 3em;
+    max-height: 3em;
+}
+
+.lightbox__loader {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    width: 2rem;
+    height: 2rem;
+
+    opacity: 0;
+
+    transform: translate(-50%, -50%);
+
+    transition-duration: 2000ms;
+    transition-property: opacity;
+
+    &[data-active="true"] {
+        opacity: 1;
+    }
+
+    svg {
+        display: block;
+        width: 100%;
+    }
+}
+
+.lightbox__nav {
+    position: absolute;
+    z-index: 3;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3em;
+
+    text-align: center;
+
+    background-color: #fff;
+}
+
+.lightbox__buttons {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.lightbox__button {
+    float: left;
+    clear: none;
+}
+
+.lightbox__button--close {
+    position: absolute;
+    z-index: 1;
+    top: 1em;
+    right: 1em;
+}
+
+@media (min-height: 640px) {
+    .lightbox__container {
+        padding: 1em 1em (4em + 1em);
+    }
+
+    .lightbox__nav {
+        height: 4em;
+    }
+}

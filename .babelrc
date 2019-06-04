@@ -2,11 +2,11 @@
     "presets": [
         ["@babel/preset-env", {
             "debug": false,
-            "useBuiltIns": "usage"
+            "useBuiltIns": "usage",
+            "corejs": "2"
         }]
     ],
     "plugins": [
-        ["@babel/plugin-transform-regenerator"],
-        ["transform-html-import-to-string"]
+        ["@babel/plugin-transform-regenerator"]
     ]
 }

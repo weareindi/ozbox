@@ -1,19 +1,16 @@
-import Template from '../html/template.html';
-import ResizeObserver from 'resize-observer-polyfill';
-
 /**
- * OzBox
+ * Lightbox
  */
-export class OzBox {
+class Lightbox {
     /**
      * Constructor
      * @param {object} options User defined overrides
      */
     constructor(options) {
         this.settings = Object.assign({
-            'selector': '[data-ozbox]',
-            'groupNameAttribute': 'data-ozbox',
-            'customImgSrcAttribute': 'data-ozbox-src'
+            'selector': '[lightbox]',
+            'groupNameAttribute': 'lightbox',
+            'customImgSrcAttribute': 'lightbox-src'
         }, options);
 
         this.appendTemplate();
@@ -28,7 +25,72 @@ export class OzBox {
      * Inject template into DOM
      */
     appendTemplate() {
-        document.body.insertAdjacentHTML('beforeend', Template);
+        const template = `
+        <div class="lightbox" data-active="false">
+            <div class="lightbox__background"></div>
+
+            <div class="lightbox__nav">
+                <div class="lightbox__buttons">
+                    <div class="lightbox__button lightbox__button--previous">
+                        <button class="lightbox-button lightbox-button--previous">
+                            <span class="lightbox-button__icon">
+                                <svg viewBox="0 0 22 36" style="background-color:#ffffff00" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                                    <path d="M21 3.3L18.8 1 1 18l17.8 17 2.2-2.3L5.6 18 21 3.3zm0 0z"/>
+                                </svg>
+                            </span>
+                            <span class="lightbox-button__text">Previous</span>
+                        </button>
+                    </div>
+                    <div class="lightbox__button lightbox__button--next">
+                        <button class="lightbox-button lightbox-button--next">
+                            <span class="lightbox-button__icon">
+                                <svg viewBox="0 0 22 36" style="background-color:#ffffff00" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                                    <path d="M1 3.3L3.2 1 21 18 3.2 35 1 32.7 16.4 18 1 3.3zm0 0z"/>
+                                </svg>
+                            </span>
+                            <span class="lightbox-button__text">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lightbox__container">
+                <div class="lightbox__window">
+                    <div class="lightbox__frame">
+                        <div class="lightbox__loader">
+                            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+                                <g stroke="rgba(255,255,255,0.75)" fill="rgba(0,0,0,0.5)">
+                                    <circle cx="22" cy="22" r="1">
+                                        <animate attributeName="r" begin="0s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"/>
+                                        <animate attributeName="opacity" begin="0s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"/>
+                                    </circle>
+                                    <circle cx="22" cy="22" r="1">
+                                        <animate attributeName="r" begin="-0.9s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"/>
+                                        <animate attributeName="opacity" begin="-0.9s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"/>
+                                    </circle>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="lightbox__button lightbox__button--close">
+                            <button class="lightbox-button lightbox-button--close">
+                                <span class="lightbox-button__icon">
+                                    <svg viewBox="0 0 18 18" style="background-color:#ffffff00" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                                        <path d="M.5 1.6l7 6.8-.1.1-6.9 7 1 1 7-6.9 7 6.9 1-1-7-7h.1l6.9-7-1-1-7 6.9-7-6.9-1 1z" fill="#fff"/>
+                                    </svg>
+                                </span>
+                                <span class="lightbox-button__text">Close</span>
+                            </button>
+                        </div>
+                        <div class="lightbox__image">
+                            <img class="lightbox__img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', template);
     }
 
     /**
@@ -38,25 +100,25 @@ export class OzBox {
         this.elements = {};
 
         // Surface
-        this.elements.surface = document.querySelector('.ozbox');
+        this.elements.surface = document.querySelector('.lightbox');
 
         // Window
-        this.elements.window = document.querySelector('.ozbox__window');
+        this.elements.window = document.querySelector('.lightbox__window');
 
         // Ajax Loader
-        this.elements.loader = document.querySelector('.ozbox__loader');
+        this.elements.loader = document.querySelector('.lightbox__loader');
 
         // Image Container Element
-        this.elements.image = document.querySelector('.ozbox__image');
+        this.elements.image = document.querySelector('.lightbox__image');
 
         // Img Element
-        this.elements.img = document.querySelector('.ozbox__img');
+        this.elements.img = document.querySelector('.lightbox__img');
 
         // Buttons
         this.elements.buttons = {};
-        this.elements.buttons.close = document.querySelector('.ozbox-button--close');
-        this.elements.buttons.previous = document.querySelector('.ozbox-button--previous');
-        this.elements.buttons.next = document.querySelector('.ozbox-button--next');
+        this.elements.buttons.close = document.querySelector('.lightbox-button--close');
+        this.elements.buttons.previous = document.querySelector('.lightbox-button--previous');
+        this.elements.buttons.next = document.querySelector('.lightbox-button--next');
     }
 
     /**
@@ -93,7 +155,7 @@ export class OzBox {
 
     /**
      * Register DOM observer
-     * This allows ozbox elements to be inserted into the DOM at any time not
+     * This allows lightbox elements to be inserted into the DOM at any time not
      * just on page load
      */
     registerDomObserver() {
@@ -112,7 +174,7 @@ export class OzBox {
 
     /**
      * Populate the directiveElements variable with elements that contain the
-     * 'data-ozbox' attribute
+     * 'data-lightbox' attribute
      */
     populateDirectiveElements() {
         this.directiveElements = document.querySelectorAll(this.settings.selector);
@@ -226,14 +288,14 @@ export class OzBox {
     }
 
     /**
-     * Show Ozbox
+     * Show Lightbox
      */
     show() {
         this.elements.surface.setAttribute('data-active', true);
     }
 
     /**
-     * Hide Ozbox
+     * Hide Lightbox
      */
     hide() {
         this.elements.surface.setAttribute('data-active', false);
@@ -295,3 +357,5 @@ export class OzBox {
         this.elements.buttons.close.setAttribute('data-active', false);
     }
 }
+
+module.exports.Lightbox = Lightbox;
