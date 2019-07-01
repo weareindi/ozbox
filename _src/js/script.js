@@ -1,3 +1,3 @@
-import {Lightbox} from './module';
+import {Ozbox} from './module';
 
-new Lightbox();
+new Ozbox();

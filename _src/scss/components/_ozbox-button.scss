@@ -1,11 +1,11 @@
-.lightbox-button {
+.ozbox-button {
     display: block;
     border: 0;
     cursor: pointer;
     outline: 0;
 }
 
-.lightbox-button__icon {
+.ozbox-button__icon {
     position: relative;
     display: block;
     width: 3em;
@@ -26,11 +26,11 @@
     }
 }
 
-.lightbox-button__text {
+.ozbox-button__text {
     display: none;
 }
 
-.lightbox-button--close {
+.ozbox-button--close {
     background-color: #000;
 
     opacity: 0;
@@ -50,8 +50,8 @@
     }
 }
 
-.lightbox-button--previous,
-.lightbox-button--next {
+.ozbox-button--previous,
+.ozbox-button--next {
     background-color: #fff;
 
     opacity: 0.75;
@@ -64,14 +64,14 @@
 }
 
 @media (min-height: 640px) {
-    .lightbox-button--close {
-        .lightbox-button__icon {
+    .ozbox-button--close {
+        .ozbox-button__icon {
             width: 3em;
             height: 3em;
         }
     }
 
-    .lightbox-button__icon {
+    .ozbox-button__icon {
         width: 4em;
         height: 4em;
     }
