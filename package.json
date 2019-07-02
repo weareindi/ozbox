@@ -1,60 +1,54 @@
 {
-    "name": "lightbox",
-    "version": "1.0.0",
-    "description": "An image display script designed with progressive enhancement in mind",
-    "main": "_src/js/module.js",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/weareindi/lightbox.git"
-    },
-    "keywords": [
-        "lightbox",
-        "gallery",
-        "css",
-        "javascript",
-        "es6",
-        "progressive enhancement"
-    ],
-    "author": "Laurence Archer",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/weareindi/lightbox/issues"
-    },
-    "homepage": "https://github.com/weareindi/lightbox#readme",
-    "devDependencies": {
-        "@babel/cli": "^7.4.4",
-        "@babel/core": "^7.4.5",
-        "@babel/plugin-transform-regenerator": "^7.4.5",
-        "@babel/polyfill": "^7.4.4",
-        "@babel/preset-env": "^7.4.5",
-        "autoprefixer": "^9.6.0",
-        "babelify": "^10.0.0",
-        "browserify": "^16.2.3",
-        "concurrently": "^4.1.0",
-        "core-js": "^2.6.9",
-        "cssnano": "^4.1.10",
-        "eslint": "^5.16.0",
-        "eslint-config-google": "^0.13.0",
-        "node-sass": "^4.12.0",
-        "postcss-cli": "^6.1.2",
-        "stylelint": "^10.0.1",
-        "stylelint-config-standard": "^18.3.0",
-        "stylelint-order": "^3.0.0",
-        "uglify-js": "^3.6.0",
-        "watch-cli": "^0.2.3"
-    },
-    "scripts": {
-        "scss": "node-sass _src/scss/styles.scss > dist/css/styles.css --output-style expanded --indent-type space --indent-width 4",
-        "css-autoprefix": "postcss dist/css/styles.css --output dist/css/styles.css --use autoprefixer --no-map",
-        "css-minify": "postcss dist/css/styles.css --output dist/css/styles.min.css --use cssnano --no-map",
-        "js": "browserify _src/js/script.js -o dist/js/script.js -t [ babelify ]",
-        "js-minify": "uglifyjs dist/js/script.js > dist/js/script.min.js",
-        "compile-css": "npm run scss && npm run css-autoprefix",
-        "compile-js": "npm run js",
-        "watch-css": "watch --pattern \"_src/scss/**/*.scss\" -c \"npm run compile-css\"",
-        "watch-js": "watch --pattern \"_src/js/**/*.js\" -c \"npm run compile-js\"",
-        "watch": "concurrently \"npm run watch-css\" \"npm run watch-js\"",
-        "production": "npm run compile-css && npm run css-minify && npm run js && npm run js-minify",
-        "sync": "browser-sync start --proxy \"localhost:8080\" --files \"dist\""
-    }
+  "name": "ozbox",
+  "version": "1.0.0",
+  "description": "An image display script designed with progressive enhancement in mind",
+  "main": "_src/js/module.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weareindi/ozbox.git"
+  },
+  "keywords": [
+    "lightbox",
+    "gallery",
+    "css",
+    "javascript",
+    "es6",
+    "progressive enhancement"
+  ],
+  "author": "Laurence Archer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weareindi/ozbox/issues"
+  },
+  "homepage": "https://github.com/weareindi/ozbox#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-transform-regenerator": "^7.4.4",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "autoprefixer": "^9.5.1",
+    "babelify": "^10.0.0",
+    "browser-sync": "^2.26.5",
+    "browserify": "^16.2.3",
+    "core-js": "^3.0.1",
+    "cssnano": "^4.1.10",
+    "dotenv": "^8.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.13.0",
+    "fancy-log": "^1.3.3",
+    "gulp": "^4.0.2",
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "load-gulp-tasks": "^0.1.0",
+    "node-sass-globbing": "0.0.23",
+    "resize-observer-polyfill": "^1.5.1",
+    "stylelint": "^10.0.1",
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-order": "^3.0.0",
+    "undertaker-forward-reference": "^1.0.2",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
 }

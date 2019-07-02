@@ -1,16 +1,18 @@
+import ResizeObserver from 'resize-observer-polyfill';
+
 /**
- * Lightbox
+ * Ozbox
  */
-class Lightbox {
+class Ozbox {
     /**
      * Constructor
      * @param {object} options User defined overrides
      */
     constructor(options) {
         this.settings = Object.assign({
-            'selector': '[lightbox]',
-            'groupNameAttribute': 'lightbox',
-            'customImgSrcAttribute': 'lightbox-src'
+            'selector': '[ozbox]',
+            'groupNameAttribute': 'ozbox',
+            'customImgSrcAttribute': 'ozbox-src'
         }, options);
 
         this.appendTemplate();
@@ -26,38 +28,38 @@ class Lightbox {
      */
     appendTemplate() {
         const template = `
-        <div class="lightbox" data-active="false">
-            <div class="lightbox__background"></div>
+        <div class="ozbox" data-active="false">
+            <div class="ozbox__background"></div>
 
-            <div class="lightbox__nav">
-                <div class="lightbox__buttons">
-                    <div class="lightbox__button lightbox__button--previous">
-                        <button class="lightbox-button lightbox-button--previous">
-                            <span class="lightbox-button__icon">
+            <div class="ozbox__nav">
+                <div class="ozbox__buttons">
+                    <div class="ozbox__button ozbox__button--previous">
+                        <button class="ozbox-button ozbox-button--previous">
+                            <span class="ozbox-button__icon">
                                 <svg viewBox="0 0 22 36" style="background-color:#ffffff00" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                                     <path d="M21 3.3L18.8 1 1 18l17.8 17 2.2-2.3L5.6 18 21 3.3zm0 0z"/>
                                 </svg>
                             </span>
-                            <span class="lightbox-button__text">Previous</span>
+                            <span class="ozbox-button__text">Previous</span>
                         </button>
                     </div>
-                    <div class="lightbox__button lightbox__button--next">
-                        <button class="lightbox-button lightbox-button--next">
-                            <span class="lightbox-button__icon">
+                    <div class="ozbox__button ozbox__button--next">
+                        <button class="ozbox-button ozbox-button--next">
+                            <span class="ozbox-button__icon">
                                 <svg viewBox="0 0 22 36" style="background-color:#ffffff00" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                                     <path d="M1 3.3L3.2 1 21 18 3.2 35 1 32.7 16.4 18 1 3.3zm0 0z"/>
                                 </svg>
                             </span>
-                            <span class="lightbox-button__text">Next</span>
+                            <span class="ozbox-button__text">Next</span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="lightbox__container">
-                <div class="lightbox__window">
-                    <div class="lightbox__frame">
-                        <div class="lightbox__loader">
+            <div class="ozbox__container">
+                <div class="ozbox__window">
+                    <div class="ozbox__frame">
+                        <div class="ozbox__loader">
                             <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
                                 <g stroke="rgba(255,255,255,0.75)" fill="rgba(0,0,0,0.5)">
                                     <circle cx="22" cy="22" r="1">
@@ -71,18 +73,21 @@ class Lightbox {
                                 </g>
                             </svg>
                         </div>
-                        <div class="lightbox__button lightbox__button--close">
-                            <button class="lightbox-button lightbox-button--close">
-                                <span class="lightbox-button__icon">
+                        <div class="ozbox__button ozbox__button--close">
+                            <button class="ozbox-button ozbox-button--close">
+                                <span class="ozbox-button__icon">
                                     <svg viewBox="0 0 18 18" style="background-color:#ffffff00" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                                         <path d="M.5 1.6l7 6.8-.1.1-6.9 7 1 1 7-6.9 7 6.9 1-1-7-7h.1l6.9-7-1-1-7 6.9-7-6.9-1 1z" fill="#fff"/>
                                     </svg>
                                 </span>
-                                <span class="lightbox-button__text">Close</span>
+                                <span class="ozbox-button__text">Close</span>
                             </button>
                         </div>
-                        <div class="lightbox__image">
-                            <img class="lightbox__img">
+                        <div class="ozbox__item">
+                            <!--
+                            <img class="ozbox__image">
+                            <iframe class="ozbox__iframe" type="text/html" frameborder="0"></iframe>
+                            -->
                         </div>
                     </div>
                 </div>
@@ -100,25 +105,22 @@ class Lightbox {
         this.elements = {};
 
         // Surface
-        this.elements.surface = document.querySelector('.lightbox');
+        this.elements.surface = document.querySelector('.ozbox');
 
         // Window
-        this.elements.window = document.querySelector('.lightbox__window');
+        this.elements.window = document.querySelector('.ozbox__window');
 
         // Ajax Loader
-        this.elements.loader = document.querySelector('.lightbox__loader');
+        this.elements.loader = document.querySelector('.ozbox__loader');
 
-        // Image Container Element
-        this.elements.image = document.querySelector('.lightbox__image');
-
-        // Img Element
-        this.elements.img = document.querySelector('.lightbox__img');
+        // Item Container Element
+        this.elements.item = document.querySelector('.ozbox__item');
 
         // Buttons
         this.elements.buttons = {};
-        this.elements.buttons.close = document.querySelector('.lightbox-button--close');
-        this.elements.buttons.previous = document.querySelector('.lightbox-button--previous');
-        this.elements.buttons.next = document.querySelector('.lightbox-button--next');
+        this.elements.buttons.close = document.querySelector('.ozbox-button--close');
+        this.elements.buttons.previous = document.querySelector('.ozbox-button--previous');
+        this.elements.buttons.next = document.querySelector('.ozbox-button--next');
     }
 
     /**
@@ -127,9 +129,9 @@ class Lightbox {
     registerTemplateBinds() {
         this.elements.buttons.close.addEventListener('click', () => {
             this.hide();
-            this.hideImage();
+            this.hideItem();
             this.hideClose();
-            this.removeImage();
+            this.removeItem();
         });
 
         this.elements.buttons.previous.addEventListener('click', () => {
@@ -140,22 +142,17 @@ class Lightbox {
             this.changeImg('next');
         });
 
-        this.elements.img.addEventListener('load', () => {
-            this.hideLoader();
-            this.showImage();
-            this.showClose();
-        });
-
         (new ResizeObserver((entries, observer) => {
             for (const entry of entries) {
-                this.setMaxDimensions(entry.contentRect.width, entry.contentRect.height);
+                this.updateMaxDimensions(entry.contentRect.width, entry.contentRect.height);
+                this.setMaxDimensions();
             }
         })).observe(this.elements.window);
     }
 
     /**
      * Register DOM observer
-     * This allows lightbox elements to be inserted into the DOM at any time not
+     * This allows ozbox elements to be inserted into the DOM at any time not
      * just on page load
      */
     registerDomObserver() {
@@ -174,7 +171,7 @@ class Lightbox {
 
     /**
      * Populate the directiveElements variable with elements that contain the
-     * 'data-lightbox' attribute
+     * 'data-ozbox' attribute
      */
     populateDirectiveElements() {
         this.directiveElements = document.querySelectorAll(this.settings.selector);
@@ -184,6 +181,7 @@ class Lightbox {
      * Regiser binds on directive elements
      */
     registerDirectiveBinds() {
+
         for (let i = 0; i < this.directiveElements.length; i++) {
             // Skip if event already defined
             if (this.directiveElements[i].eventsRegistered) {
@@ -197,7 +195,7 @@ class Lightbox {
                 this.populateGroupImages(event.currentTarget);
                 this.show();
                 this.showLoader();
-                this.loadImage();
+                this.loadItem();
             });
 
             // Save var to indicate click event is present
@@ -271,10 +269,15 @@ class Lightbox {
         }
 
         this.hideClose();
-        this.hideImage();
-        this.removeImage();
+        this.hideItem();
+        this.removeItem();
         this.showLoader();
-        this.loadImage();
+        this.loadItem();
+    }
+
+    updateMaxDimensions(width, height) {
+        this.maxWidth = width;
+        this.maxHeight = height;
     }
 
     /**
@@ -282,9 +285,15 @@ class Lightbox {
      * @param {integer} width In Pixels
      * @param {integer} height In Pixels
      */
-    setMaxDimensions(width, height) {
-        this.elements.img.style.maxWidth = (width + 'px');
-        this.elements.img.style.maxHeight = (height + 'px');
+    setMaxDimensions() {
+        const element = this.elements.item.querySelector('.ozbox__image, .ozbox__aspectRatio');
+
+        if (!element) {
+            return false;
+        }
+
+        element.style.maxWidth = (this.maxWidth + 'px');
+        element.style.maxHeight = (this.maxHeight + 'px');
     }
 
     /**
@@ -318,29 +327,52 @@ class Lightbox {
     /**
      * Remove src value from img element
      */
-    removeImage() {
-        this.elements.img.setAttribute('src', '');
+    removeItem() {
+        this.elements.item.innerHTML = '';
     }
 
     /**
      * Add current image source to src value on img element
      */
-    loadImage() {
-        this.elements.img.setAttribute('src', this.groupImages[this.groupCurrentIndex]);
+    loadItem() {
+        var src = this.groupImages[this.groupCurrentIndex];
+
+        // Do YouTube
+        if (this.isYoutube(src)) {
+            return this.loadYouTube(src);
+        }
+
+        // Do image
+        return this.loadImage(src);
+        // return this.elements.image.setAttribute('src', src);
+    }
+
+    loadImage(src) {
+        const element = document.createElement('img');
+        element.className += 'ozbox__image';
+        element.src = src;
+        element.onload = () => {
+            this.setMaxDimensions();
+            this.hideLoader();
+            this.showItem();
+            this.showClose();
+        }
+
+        this.elements.item.appendChild(element);
     }
 
     /**
      * Show Image Container
      */
-    showImage() {
-        this.elements.image.setAttribute('data-active', true);
+    showItem() {
+        this.elements.item.setAttribute('data-active', true);
     }
 
     /**
      * Hide Image Container
      */
-    hideImage() {
-        this.elements.image.setAttribute('data-active', false);
+    hideItem() {
+        this.elements.item.setAttribute('data-active', false);
     }
 
     /**
@@ -356,6 +388,65 @@ class Lightbox {
     hideClose() {
         this.elements.buttons.close.setAttribute('data-active', false);
     }
+
+    /**
+     * Is supplied URL a known video url
+     * @return {Boolean}
+     */
+    isYoutube(src) {
+        var regExp = /\/\/.*?(youtube.com|youtu.be)/;
+        var match = src.match(regExp);
+
+        if (!match) {
+            return false;
+        }
+
+        if (match.length === 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Get YouTube video ID
+     * @param  {String} src A valid url
+     * @return {[type]}     [description]
+     */
+    getYouTubeIDFromSrc(src) {
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        var match = src.match(regExp);
+
+        return (match&&match[7].length==11)? match[7] : false;
+    }
+
+    /**
+     * Load Video
+     * @param  {String} src A valid YouTube video url
+     */
+    loadYouTube(src) {
+        var youtubeID = this.getYouTubeIDFromSrc(src);
+
+        // Add placeholder div to control aspect ratio
+        const placeholder = document.createElement('img');
+        placeholder.className += 'ozbox__aspectRatio';
+        placeholder.src = 'https://i1.ytimg.com/vi/'+ youtubeID +'/maxresdefault.jpg';
+        this.elements.item.appendChild(placeholder);
+
+        // Load iframe
+        const iframe = document.createElement('iframe');
+        iframe.className += 'ozbox__iframe';
+        iframe.setAttribute('frameborder', 0);
+        iframe.setAttribute('allowfullscreen', 'allowfullscreen');
+        iframe.src = 'https://www.youtube.com/embed/'+ youtubeID +'?modestbranding=1&autohide=1&controls=1&showinfo=0&showsearch=0&rel=0&iv_load_policy=0&autoplay=1&loop=0';
+        iframe.onload = () => {
+            this.setMaxDimensions();
+            this.hideLoader();
+            this.showItem();
+            this.showClose();
+        }
+        this.elements.item.appendChild(iframe);
+    }
 }
 
-module.exports.Lightbox = Lightbox;
+module.exports.Ozbox = Ozbox;
