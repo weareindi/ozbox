@@ -8,11 +8,10 @@
 .ozbox-button__icon {
     position: relative;
     display: block;
-    width: 3em;
-    height: 3em;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-}
+    width: 1.5em;
+    height: 1.5em;
+    margin-top: -0.75em;
+    margin-left: -0.75em; }
 
 .ozbox-button__icon svg {
     position: absolute;
@@ -52,8 +51,7 @@
     opacity: 1;
     -webkit-transition-duration: 250ms;
          -o-transition-duration: 250ms;
-            transition-duration: 250ms;
-}
+            transition-duration: 250ms; }
 
 .ozbox-button--previous,
 .ozbox-button--next {
@@ -166,15 +164,12 @@
     opacity: 1;
     -webkit-transition-duration: 2000ms;
          -o-transition-duration: 2000ms;
-            transition-duration: 2000ms;
-}
+            transition-duration: 2000ms; }
 
 .ozbox__image,
 .ozbox__iframe {
     display: block;
-    max-width: 3em;
-    max-height: 3em;
-}
+    width: 100%; }
 
 .ozbox__loader {
     position: absolute;

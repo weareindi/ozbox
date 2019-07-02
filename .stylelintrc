@@ -8,6 +8,7 @@
     },
     "rules": {
         "block-no-empty": null,
+        "at-rule-no-unknown": null,
         "max-empty-lines": 2,
         "indentation": 4,
         "selector-pseudo-element-colon-notation": "single",
