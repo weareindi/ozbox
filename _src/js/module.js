@@ -1,3 +1,5 @@
+import ResizeObserver from 'resize-observer-polyfill';
+
 /**
  * Ozbox
  */
@@ -82,8 +84,10 @@ class Ozbox {
                             </button>
                         </div>
                         <div class="ozbox__item">
+                            <!--
                             <img class="ozbox__image">
                             <iframe class="ozbox__iframe" type="text/html" frameborder="0"></iframe>
+                            -->
                         </div>
                     </div>
                 </div>
@@ -112,12 +116,6 @@ class Ozbox {
         // Item Container Element
         this.elements.item = document.querySelector('.ozbox__item');
 
-        // Image Element
-        this.elements.image = document.querySelector('.ozbox__image');
-
-        // Iframe Element
-        this.elements.iframe = document.querySelector('.ozbox__iframe');
-
         // Buttons
         this.elements.buttons = {};
         this.elements.buttons.close = document.querySelector('.ozbox-button--close');
@@ -144,21 +142,10 @@ class Ozbox {
             this.changeImg('next');
         });
 
-        this.elements.image.addEventListener('load', () => {
-            this.hideLoader();
-            this.showItem();
-            this.showClose();
-        });
-
-        this.elements.iframe.addEventListener('load', () => {
-            this.hideLoader();
-            this.showItem();
-            this.showClose();
-        });
-
         (new ResizeObserver((entries, observer) => {
             for (const entry of entries) {
-                this.setMaxDimensions(entry.contentRect.width, entry.contentRect.height);
+                this.updateMaxDimensions(entry.contentRect.width, entry.contentRect.height);
+                this.setMaxDimensions();
             }
         })).observe(this.elements.window);
     }
@@ -288,17 +275,25 @@ class Ozbox {
         this.loadItem();
     }
 
+    updateMaxDimensions(width, height) {
+        this.maxWidth = width;
+        this.maxHeight = height;
+    }
+
     /**
      * Set Img Element Max Dimensions it can grow to
      * @param {integer} width In Pixels
      * @param {integer} height In Pixels
      */
-    setMaxDimensions(width, height) {
-        this.elements.image.style.maxWidth = (width + 'px');
-        this.elements.image.style.maxHeight = (height + 'px');
+    setMaxDimensions() {
+        const element = this.elements.item.querySelector('.ozbox__image, .ozbox__aspectRatio');
 
-        this.elements.iframe.style.maxWidth = (width + 'px');
-        this.elements.iframe.style.maxHeight = (height + 'px');
+        if (!element) {
+            return false;
+        }
+
+        element.style.maxWidth = (this.maxWidth + 'px');
+        element.style.maxHeight = (this.maxHeight + 'px');
     }
 
     /**
@@ -333,8 +328,7 @@ class Ozbox {
      * Remove src value from img element
      */
     removeItem() {
-        this.elements.image.setAttribute('src', '');
-        this.elements.iframe.setAttribute('src', '');
+        this.elements.item.innerHTML = '';
     }
 
     /**
@@ -349,14 +343,28 @@ class Ozbox {
         }
 
         // Do image
-        return this.elements.image.setAttribute('src', src);
+        return this.loadImage(src);
+        // return this.elements.image.setAttribute('src', src);
+    }
+
+    loadImage(src) {
+        const element = document.createElement('img');
+        element.className += 'ozbox__image';
+        element.src = src;
+        element.onload = () => {
+            this.setMaxDimensions();
+            this.hideLoader();
+            this.showItem();
+            this.showClose();
+        }
+
+        this.elements.item.appendChild(element);
     }
 
     /**
      * Show Image Container
      */
     showItem() {
-        console.log('showItem');
         this.elements.item.setAttribute('data-active', true);
     }
 
@@ -364,7 +372,6 @@ class Ozbox {
      * Hide Image Container
      */
     hideItem() {
-        console.log('hideItem');
         this.elements.item.setAttribute('data-active', false);
     }
 
@@ -402,7 +409,7 @@ class Ozbox {
     }
 
     /**
-     * [getYouTubeIDFromSrc description]
+     * Get YouTube video ID
      * @param  {String} src A valid url
      * @return {[type]}     [description]
      */
@@ -414,26 +421,31 @@ class Ozbox {
     }
 
     /**
-     * [loadYouTube description]
-     * @param  {[type]} src [description]
-     * @return {[type]}     [description]
+     * Load Video
+     * @param  {String} src A valid YouTube video url
      */
     loadYouTube(src) {
         var youtubeID = this.getYouTubeIDFromSrc(src);
-        var dataUrl = 'https://noembed.com/embed?url=https://www.youtube.com/watch?v=' + youtubeID;
 
-        var ajaxRequest = new XMLHttpRequest();
-        ajaxRequest.onreadystatechange = () => {
-            if (ajaxRequest.readyState == 4 && ajaxRequest.status == 200) {
-                var videoData = JSON.parse(ajaxRequest.responseText);
+        // Add placeholder div to control aspect ratio
+        const placeholder = document.createElement('img');
+        placeholder.className += 'ozbox__aspectRatio';
+        placeholder.src = 'https://i1.ytimg.com/vi/'+ youtubeID +'/maxresdefault.jpg';
+        this.elements.item.appendChild(placeholder);
 
-                this.elements.iframe.width = videoData.width + 'px';
-                this.elements.iframe.height = videoData.height + 'px';
-                this.elements.iframe.src = 'https://www.youtube.com/embed/' + youtubeID + '?autoplay=1';
-            }
+        // Load iframe
+        const iframe = document.createElement('iframe');
+        iframe.className += 'ozbox__iframe';
+        iframe.setAttribute('frameborder', 0);
+        iframe.setAttribute('allowfullscreen', 'allowfullscreen');
+        iframe.src = 'https://www.youtube.com/embed/'+ youtubeID +'?modestbranding=1&autohide=1&controls=1&showinfo=0&showsearch=0&rel=0&iv_load_policy=0&autoplay=1&loop=0';
+        iframe.onload = () => {
+            this.setMaxDimensions();
+            this.hideLoader();
+            this.showItem();
+            this.showClose();
         }
-        ajaxRequest.open('GET', dataUrl, true);
-        ajaxRequest.send();
+        this.elements.item.appendChild(iframe);
     }
 }
 
