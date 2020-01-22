@@ -1,3 +1,5 @@
+const ResizeObserver = require('resize-observer-polyfill');
+
 /**
  * Ozbox
  */
